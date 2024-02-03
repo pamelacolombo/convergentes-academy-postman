@@ -1,0 +1,483 @@
+{
+	"id": "cc5bc57d-0f36-45c3-9056-f422ff664f18",
+	"name": "Convergentes",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://convergentes.qacoders-academy.com.br",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Email",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CPFUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "IdUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Message",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "TokenUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Mail",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "NewPassword",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "corporateName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "razaoSocial",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "cnpj",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "cep",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "rua",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "bairro",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "numeroCasa",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "complementoEndereco",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "telefone",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CorporateName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "RazaoSocial",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CNPJ",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Telefone",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CEP",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Rua",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Bairro",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "NumeroCasa",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "ComplementoEndereco",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email.com",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email.org",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email.net",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "IdCompany",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgSuccessfulRegistration",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "IdBoard",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgSuccessfulRegistrationBoard",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "IdCostCenter",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "IdDepartment",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DEPARTMENTNAME",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DEPARTMENTNAMEMAIUSCULA",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "departmentnameminuscula",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentNameCaracter&",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentNameNumero",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentNameCaracterDiferente",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentName50",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentName51",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "DepartmentNameII",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterNameCaracterDiferente",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "COSTCENTERNAMEMAIUSCULA",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "costcenternameminuscula",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterNameCaracter&",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterNameNumero",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterName50",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterName51",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CostCenterNameII",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BOARDNAMEMAIUSCULA",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "boardnameminuscula",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardNameCaracter&",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardNameNumero",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardNameCaracterDiferente",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardName50",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardName51",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardCaracterDiferente",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardNameII",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "SimpleName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName100",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName101",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullNameEspecialCaractere",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullNameNumero",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password12",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password8",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "PasswordSemMaiuscula",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "PasswordSemMinuscula",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password13",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password16",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-01-31T18:05:25.516Z",
+	"_postman_exported_using": "Postman/10.22.6"
+}

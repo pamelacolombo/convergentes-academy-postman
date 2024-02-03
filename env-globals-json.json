@@ -1,0 +1,111 @@
+{
+	"id": "7fdf247d-5daa-4e4f-87de-58a59b4b38e7",
+	"values": [
+		{
+			"key": "MailAdmin",
+			"value": "sysadmin@qacoders.com",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "PasswordAdmin",
+			"value": "1234@Test",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "Token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgChangedPassword",
+			"value": "Senha atualizada com sucesso!",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgRequiredField",
+			"value": "O campo nome completo é obrigatório.",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgMaximumCharacters",
+			"value": "O nome completo deve ter no máximo 100 caracteres.",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgEnterFullName",
+			"value": "Informe o Nome e Sobrenome",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgCriteriaAcceptedPassword",
+			"value": "Senha precisa conter: uma letra maiúscula, minúscula, número, e um caractere especial (@#$%). ",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgRequiredCostCenter",
+			"value": "O campo 'centro de custos' é obrigatório.",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgAlreadyRegisteredCostCenter",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgRequiredDepartment",
+			"value": "\"O campo Departamento é obrigatório.\"",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgCriteriaPasswordCostCenter",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgAlreadyRegisteredDepartment",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgCriteriaPasswordDepartment",
+			"value": "\"O campo Departamento só pode conter letras e o caractere especial '&'.\"",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgRequiredBoard",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgCriteriaPasswordBoard",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgAlreadyRegisteredBoard",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2024-01-31T18:05:51.880Z",
+	"_postman_exported_using": "Postman/10.22.6"
+}
