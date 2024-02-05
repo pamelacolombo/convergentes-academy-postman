@@ -25,8 +25,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: latest
-          check-latest: true
+          node-version: 21.6.1
+         # check-latest: true
 
       # Runs a single command using the runners shell
       - name: Step 1 Check version Newman and Node
