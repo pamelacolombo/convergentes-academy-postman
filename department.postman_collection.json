@@ -1,0 +1,1167 @@
+{
+	"info": {
+		"_postman_id": "303e684c-230d-4a68-a385-2e42f233d8ae",
+		"name": "Department",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27633104"
+	},
+	"item": [
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Config",
+					"item": [
+						{
+							"name": "Login - Default",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"Token\", JSON.parse(responseBody).token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Department Registration",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Exxecutivooo\", \"Fiinanceirooo\", \"Opperacoesss\", \"Maarketinggg\", \"Rrecursos Huumanosss\", \"Pllanejamento Estrategicooo\", \"Reelacoes Publicasss\", \"Suutentabilidadeee\", \"Reesponsabilidade Socialll\", \"Veendasss\", \"Coonformidadee\", \"Iinovacaooo\", \"Teecnologiaaa\", \"Eeticaaa, Exxecutivoooa\", \"Fiinanceiroooa\", \"Opperacoesssa\", \"Maarketinggga\", \"Rrecursos Huumanosssa\", \"Pllanejamento Estrategicoooa\", \"Reelacoes Publicasssa\", \"Suutentabilidadeeea\", \"Reesponsabilidadea Socialll\", \"Veendasssa\", \"Coonformidadeea\", \"Iinovacaoooa\", \"Teecnologiaaaa\", \"Eeticaaaa\"];omes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentName\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"IdDepartment\", JSON.parse(responseBody).newDepartment._id);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"MsgSuccessfulRegistrationBoard\", 'Cadastro realizado com sucesso.')\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentName}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Include department",
+					"item": [
+						{
+							"name": "department Not Filled",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Capitalized Letters Only department",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"EXECUTIVOA\", \"FINANCEIROA\", \"OPERACIONALA\", \"MARKETINGA\", \"RECURSOS HUMANOSA\", \"PLANEJAMENTO ESTRATEGICOA\", \"RELACOES PUBLICASA\", \"SUSTENTABILIDADEA\", \"RESPONSABILIDADE SOCIALA\", \"VENDASA\", \"CONFORMIDADEA\", \"INOVACAOA\", \"TECNOLOGIAA\", \"ETICAA\", \"CONTABILIDADEA\", \"ADMINISTRATIVOA\", \"COMERCIALA\", \"PRODUCAOA\", \"TECNICOA\", \"COBRANCAA\", \"COMPRASA EXECUTIVOB\", \"FINANCEIROB\", \"OPERACIONALB\", \"MARKETINGB\", \"RECURSOS HUMANOSB\", \"PLANEJAMENTO ESTRATEGICOB\", \"RELACOES PUBLICASB\", \"SUSTENTABILIDADEB\", \"RESPONSABILIDADE SOCIALB\", \"VENDASB\", \"CONFORMIDADEB\", \"INOVACAOB\", \"TECNOLOGIAB\", \"ETICAB\", \"CONTABILIDADEB\", \"ADMINISTRATIVOB\", \"COMERCIALB\", \"PRODUCAOB\", \"TECNICOB\", \"COBRANCAB\", \"COMPRASB\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DEPARTMENTNAMEMAIUSCULA\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"IdDepartment\", JSON.parse(responseBody).newDepartment._id);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DEPARTMENTNAMEMAIUSCULA}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lowercase only department",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"executivoa\", \"financeiroa\", \"operacionala\", \"marketinga\", \"recursos humanosa\", \"planejamento estrategicoa\", \"relacoes publicasa\", \"sutentabilidadea\", \"responsabilidade sociala\", \"vendasa\", \"conformidadea\", \"inovacaoa\", \"tecnologiaa\", \"eticaa\", \"contabilidadea\", \"administrativoa\", \"comerciala\", \"producaoa\", \"tecnicoa\", \"cobrancaa\", \"compraas\", \"executivob\", \"financeirob\", \"operacionabl\", \"marketingb\", \"recursos humanosbb\", \"planejamento estrategicob\", \"relacoes publicasb\", \"sutentabilidadeb\", \"responsabilidade socialb\", \"vendabs\", \"conformidadeb\", \"inovacaob\", \"tecnologiab\", \"eticab\", \"contabilidadbe\", \"administrativob\", \"comercialb\", \"producaob\", \"tecnicob\", \"cobrancab\", \"comprasb\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"departmentnameminuscula\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"IdDepartment\", JSON.parse(responseBody).newDepartment._id);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{departmentnameminuscula}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "department with Special Character &",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"&\", \"&&\", \"&&&\", \"&&&&\", \"&&&&&\", \"&&&&&&\", \"&&&&&&&\", \"&&&&&&&&\", \"&&&& &&&&&\", \"&&&&& &&&&&\", \"&&&&& &&&&&&\", \"&&&&&& &&&&&&\", \"&&&&&& &&&&&&&\", \"& &&\", \"& &&&\", \"&& &&\", \"&&& &\", \"&& &\", \"&&& &&\", \"&&& &&&\", \"&& &&&\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentNameCaracter&\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"IdDepartment\", JSON.parse(responseBody).newDepartment._id);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentNameCaracter&}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "department with Numbers",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"12523\", \"45546\", \"78689\", \"123456\", \"234567\", \"345678\", \"456789\", \"01234\", \"04321\", \"54321\", \"654114\", \"254263257\", \"025489\", \"365478\", \"2541365\", \"985471\", \"3254123\", \"8745985\", \"3254125\", \"032145698\", \"2541586\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentNameNumero\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentNameNumero}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "department with special character other than &",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"DepartmentNameCaracterDiferente\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"-----\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "department Filled with 50 characters",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Cfccccccccccccccccccccccccccccccccccccccccccccccca\", \"Ccfccccccccccccccccccccccccccccccccccccccccccccccb\", \"Ccfccccccccccccccccccccccccccccccccccccccccccccccd\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccce\", \"Ccccccccfccccccccccccccccccccccccccccccccccccccccf\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccg\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccch\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccci\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccj\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccck\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccccl\", \"Ccccccccccccfccccccccccccccccccccccccccccccccccccm\", \"Ccccccccccccfccccccccccccccccccccccccccccccccccccn\", \"Ccccccccccfcccccccccccccccccccccccccccccccccccccco\", \"Cccccccccfcccccccccccccccccccccccccccccccccccccccp\", \"Ccccccccfccccccccccccccccccccccccccccccccccccccccq\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccr\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccs\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccct\", \"Ccccccfccccccccccccccccccccccccccccccccccccccccccu\", \"Ccccccfccccccccccccccccccccccccccccccccccccccccccv\"];\r",
+											"\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentName50\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentName50}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "department Filled with 51 characters",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Cccccccccccccccccccccccccccccccccccccccccccccccccac\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccbc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccdc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccec\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccfc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccgc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccchc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccic\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccjc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccckc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccclc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccmc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccnc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccoc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccpc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccqc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccrc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccsc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccctc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccuc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccvc\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentName51\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentName51}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fill in department field with name already registered -",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 409\", function () {\r",
+											"    pm.response.to.have.status(409);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"Tecnico\",\r\n  \"costCenterId\": \"6580f93a9e210910c506a281\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"The Department field is required.\".",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test('Verify message error', () => {\r",
+											"    const MsgRequiredDepartment = JSON.parse(responseBody).error[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgRequiredDepartment\", MsgRequiredDepartment)\r",
+											"  \r",
+											"   pm.expect((MsgRequiredDepartment)).to.eql(JSON.parse(responseBody).error[0])\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"The Department field can only contain (descrição_caracteres).\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"DepartmentNameCaracterDiferente\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test('Verify message error', () => {\r",
+											"    const MsgCriteriaPasswordDepartment = JSON.parse(responseBody).error[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgCriteriaPasswordDepartment\", MsgCriteriaPasswordDepartment)\r",
+											"  \r",
+											"   pm.expect((MsgCriteriaPasswordDepartment)).to.eql(JSON.parse(responseBody).error[0])\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentNameCaracterDiferente}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"Unable to save this record. Department already registered in the system.\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 409\", function () {\r",
+											"    pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"  pm.test('Verify message alert', () => {\r",
+											"    const MsgAlreadyRegisteredDepartment = JSON.parse(responseBody).alert[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgAlreadyRegisteredDepartment\", MsgAlreadyRegisteredDepartment)\r",
+											"  \r",
+											"   pm.expect((MsgAlreadyRegisteredDepartment)).to.eql(JSON.parse(responseBody).alert[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.alert).to.eql([\"Não é possível salvar esse registro. Departamento já cadastrado no sistema.\"]);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"Tecnico\",\r\n  \"costCenterId\": \"6580f93a9e210910c506a281\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"Registration successful.\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Exxecutivooo\", \"Fiinanceirooo\", \"Opperacoesss\", \"Maarketinggg\", \"Rrecursos Huumanosss\", \"Pllanejamento Estrategicooo\", \"Reelacoes Publicasss\", \"Suutentabilidadeee\", \"Reesponsabilidade Socialll\", \"Veendasss\", \"Coonformidadee\", \"Iinovacaooo\", \"Teecnologiaaa\", \"Eeticaaa, Exxecutivoooa\", \"Fiinanceiroooa\", \"Opperacoesssa\", \"Maarketinggga\", \"Rrecursos Huumanosssa\", \"Pllanejamento Estrategicoooa\", \"Reelacoes Publicasssa\", \"Suutentabilidadeeea\", \"Reesponsabilidadea Socialll\", \"Veendasssa\", \"Coonformidadeea\", \"Iinovacaoooa\", \"Teecnologiaaaa\", \"Eeticaaaa\"];\r",
+											"\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentName\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the msg\", function () {\r",
+											"   const mensagem = 'Cadastro realizado com sucesso.'\r",
+											"   pm.expect(JSON.parse(responseBody).msg).to.equal(mensagem);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentName}}\",\r\n  \"costCenterId\": \"{{IdCostCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit Department",
+					"item": [
+						{
+							"name": "atualizar um departamento passando o id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"ExecutivoII\", \"FinanceiroII\", \"OperacionalII\", \"MarketingII\", \"Recursos HumanosII\", \"Planejamento EstrategicoII\", \"Relacoes PublicasII\", \"SutentabilidadeII\", \"Responsabilidade SocialII\", \"VendasII\", \"ConformidadeII\", \"InovacaoII\", \"TecnologiaII\", \"EticaII\", \"ContabilidadeII\", \"AdministrativoII\", \"ComercialII\", \"ProducaoII\", \"TecnicoII\", \"CobrancaII\", \"ComprasII\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"DepartmentNameII\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"departmentName\": \"{{DepartmentNameII}}\",\r\n  \"costCenterId\": \"6581c15c9e210910c506a319\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/{{IdDepartment}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"{{IdDepartment}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Department",
+					"item": [
+						{
+							"name": "mostrar um departamento",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/department/{{IdDepartment}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"{{IdDepartment}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List department",
+					"item": [
+						{
+							"name": "listagem de departamentos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/department/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "contagem de departamentos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/department/count/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"count",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Inactivate department",
+					"item": [
+						{
+							"name": "atualizar o status de um departamento passando o id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/department/status/{{IdDepartment}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{IdDepartment}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

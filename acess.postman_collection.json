@@ -1,0 +1,3644 @@
+{
+	"info": {
+		"_postman_id": "25fd79f2-524e-4647-a211-569f0d027064",
+		"name": "Acess",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27633104"
+	},
+	"item": [
+		{
+			"name": "Acess",
+			"item": [
+				{
+					"name": "Config",
+					"item": [
+						{
+							"name": "Login - Default",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"Token\", JSON.parse(responseBody).token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register - new user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the full name\", function () {\r",
+											"  pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"IdUser\", JSON.parse(responseBody).user._id);\r",
+											"\r",
+											"pm.test(\"Check mail is true\", function(){\r",
+											"    pm.expect(pm.environment.get(\"Email\")).to.eql(JSON.parse(responseBody).user.mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check cpf is True\", function () {\r",
+											"    pm.expect(pm.variables.get(\"CPFUser\")).to.eql(JSON.parse(responseBody).user.cpf)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check fullName is True\", function () {\r",
+											"    pm.expect(pm.variables.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"Message\", `Olá ${pm.environment.get(\"FullName\")} cadastro realizado com sucesso`)\r",
+											"})\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const names = ['Alicee', 'Miguell', 'Sophiaa', 'Arthurr', 'Helenaa', 'Bernardoa', 'Valentinaa', 'Heitora', 'Lauraa', 'Davia', 'Isabellaa', 'Lorenzoa', 'Manuelaa', 'Theoa', 'Luizaa', 'Pedroa', 'Giovannaa', 'Gabriela', 'Juliaa', 'Enzoa', 'Mariaa', 'Luizaa', 'Matheusa', 'Lorenaa', 'Lucasa', 'Beatriza', 'Benjamina', 'Mariaa', 'Eduardaa', 'Nicolasa', 'Laraaa', 'Guilhermea', 'Marianaa', 'Rafaela', 'Larissaa', 'Joaquima', 'Camilaa', 'Samuela', 'Isadoraa', 'Henriquea', 'Antoniaa', 'Gustavoa', 'Mariaa', 'Claraa', 'Muriloa', 'Isabellay', 'Felipea', 'Laviniaaa', 'Pietrao', 'Mariaa'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergente.com.br'))\r",
+											" \r",
+											" \r",
+											"function gerarSenha() {\r",
+											"  const caracteres = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"  const comprimentoMinimo = 8;\r",
+											"  const comprimentoMaximo = 12;\r",
+											"  \r",
+											"  let senhaArray = [];\r",
+											"\r",
+											"  senhaArray.push(caracteres[Math.floor(Math.random() * 26)]); // Caractere maiúsculo\r",
+											"  senhaArray.push(caracteres[26 + Math.floor(Math.random() * 26)]); // Caractere minúsculo\r",
+											"  senhaArray.push(caracteres[52 + Math.floor(Math.random() * 10)]); // Número\r",
+											"  senhaArray.push(caracteres[62 + Math.floor(Math.random() * 4)]); // Caractere especial\r",
+											"\r",
+											"  const comprimentoRestante = Math.max(comprimentoMinimo - senhaArray.length, comprimentoMaximo - senhaArray.length);\r",
+											"\r",
+											"  for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"    senhaArray.push(caracteres[Math.floor(Math.random() * caracteres.length)]);\r",
+											"  }\r",
+											"\r",
+											"  return shuffleString(senhaArray.join(\"\"));\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"  return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Password\", gerarSenha());\r",
+											" \r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{Password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login - new user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify token is true\", function () {\r",
+											"    pm.expect(JSON.parse(responseBody)).to.have.property(\"token\");\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"TokenUser\", JSON.parse(responseBody).token)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sucesso",
+					"item": [
+						{
+							"name": "The full name field filled with 100 characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const names = ['Aaaaaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab', 'Aaaaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae', 'Aaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf', 'Aaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag', 'Aaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah', 'Aaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai', 'Aaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaj', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam', 'Aaaaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaao', 'Aaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaap', 'Aaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaq', 'Aaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar', 'Aaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas', 'Aaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaat', 'Aaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaau', 'Aaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaav', 'Aaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaw', 'Aaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaax', 'Aaaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaaz'];\r",
+											" \r",
+											"const lastnames = ['Aaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaaaaab', 'Aaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaaaaaaaaaac', 'Aaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad', 'Aaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaaaaaaaaae', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaf', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaag', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaah', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaai', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaj', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaak', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaal', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaam', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaan', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaao', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaap', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaq', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaar', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaas', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaat', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaau', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaav', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaw', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaax', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaay', 'Aaaaaaaaaaaaaaaaaaaaaaaaaaawaaaaaaaaaaaaaaaaaaaaz'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName100\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + '@convergentes.com.br'))\r",
+											" \r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\":\"{{FullName100}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The e-mail field filled in with .COM format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email.com\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergente.com'))\r",
+											" \r",
+											"\r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email.com}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The e-mail field filled in with .COM.ORG format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email.org\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergente.com.org'))\r",
+											" \r",
+											"\r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email.org}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The e-mail field filled in with .COM.NET format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email.net\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergente.com.net'))\r",
+											" \r",
+											"\r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email.net}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in with 8 characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"Message\", `Olá ${pm.environment.get(\"FullName\")} cadastro realizado com sucesso`)\r",
+											"})\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergentess.com.br'))\r",
+											"\r",
+											" function gerarSenha8 (tamanho = 8) {\r",
+											"    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';\r",
+											"    let senha = '';\r",
+											"    for (let i = 0; i < tamanho; i++) {\r",
+											"        senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+											"    }\r",
+											"    return senha;\r",
+											"}\r",
+											"\r",
+											"// Gerar uma senha\r",
+											"console.log(gerarSenha8());\r",
+											"\r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{gerarSenha8}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"{{gerarSenha8}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in with 12 characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the full name\", function () {\r",
+											"  pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check mail is true\", function(){\r",
+											"    pm.expect(pm.environment.get(\"Email\")).to.eql(JSON.parse(responseBody).user.mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check cpf is True\", function () {\r",
+											"    pm.expect(pm.variables.get(\"CPFUser\")).to.eql(JSON.parse(responseBody).user.cpf)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check fullName is True\", function () {\r",
+											"    pm.expect(pm.variables.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"Message\", `Olá ${pm.environment.get(\"FullName\")} cadastro realizado com sucesso`)\r",
+											"})\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergentess.com.br'))\r",
+											" \r",
+											" function gerarSenha12 (tamanho = 12) {\r",
+											"    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';\r",
+											"    let senha = '';\r",
+											"    for (let i = 0; i < tamanho; i++) {\r",
+											"        senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+											"    }\r",
+											"    return senha;\r",
+											"}\r",
+											"\r",
+											"// Gerar uma senha\r",
+											"console.log(gerarSenha12());\r",
+											"\r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{gerarSenha12}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"{{gerarSenha12}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a user's password by passing the ID - token user",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória\r",
+											"function gerarSenha() {\r",
+											"  const caracteres = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"  const comprimentoMinimo = 8;\r",
+											"  const comprimentoMaximo = 12;\r",
+											"  \r",
+											"  let senhaArray = [];\r",
+											"\r",
+											"  // Garante pelo menos um caractere maiúsculo, minúsculo, número e especial\r",
+											"  senhaArray.push(caracteres[Math.floor(Math.random() * 26)]); // Caractere maiúsculo\r",
+											"  senhaArray.push(caracteres[26 + Math.floor(Math.random() * 26)]); // Caractere minúsculo\r",
+											"  senhaArray.push(caracteres[52 + Math.floor(Math.random() * 10)]); // Número\r",
+											"  senhaArray.push(caracteres[62 + Math.floor(Math.random() * 4)]); // Caractere especial\r",
+											"\r",
+											"  const comprimentoRestante = Math.max(comprimentoMinimo - senhaArray.length, comprimentoMaximo - senhaArray.length);\r",
+											"\r",
+											"  for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"    senhaArray.push(caracteres[Math.floor(Math.random() * caracteres.length)]);\r",
+											"  }\r",
+											"\r",
+											"  return shuffleString(senhaArray.join(\"\"));\r",
+											"}\r",
+											"\r",
+											"// Função para embaralhar uma string\r",
+											"function shuffleString(string) {\r",
+											"  return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"NewPassword\", gerarSenha());\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", function () {\r",
+											"    pm.expect(pm.globals.get(\"MsgChangedPassword\")).to.eql(JSON.parse(responseBody).msg)\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"{{NewPassword}}\",\r\n    \"confirmPassword\": \"{{NewPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/password/{{IdUser}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{IdUser}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a user's status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/status/{{IdUser}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"status",
+										"{{IdUser}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Validate Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/validateToken",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"validateToken"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/{{IdUser}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{IdUser}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Count",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Listing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete - user id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/{{IdUser}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{IdUser}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Falso Positivo",
+					"item": [
+						{
+							"name": "Register - new user 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the full name\", function () {\r",
+											"  pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"IdUser\", JSON.parse(responseBody).user._id);\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check mail is true\", function(){\r",
+											"    pm.expect(pm.environment.get(\"Email\")).to.eql(JSON.parse(responseBody).user.mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check cpf is True\", function () {\r",
+											"    pm.expect(pm.variables.get(\"CPFUser\")).to.eql(JSON.parse(responseBody).user.cpf)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check fullName is True\", function () {\r",
+											"    pm.expect(pm.variables.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"Message\", `Olá ${pm.environment.get(\"FullName\")} cadastro realizado com sucesso`)\r",
+											"})\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const names = ['Alicee', 'Miguell', 'Sophiaa', 'Arthurr', 'Helenaa', 'Bernardoa', 'Valentinaa', 'Heitora', 'Lauraa', 'Davia', 'Isabellaa', 'Lorenzoa', 'Manuelaa', 'Theoa', 'Luizaa', 'Pedroa', 'Giovannaa', 'Gabriela', 'Juliaa', 'Enzoa', 'Mariaa', 'Luizaa', 'Matheusa', 'Lorenaa', 'Lucasa', 'Beatriza', 'Benjamina', 'Mariaa', 'Eduardaa', 'Nicolasa', 'Laraaa', 'Guilhermea', 'Marianaa', 'Rafaela', 'Larissaa', 'Joaquima', 'Camilaa', 'Samuela', 'Isadoraa', 'Henriquea', 'Antoniaa', 'Gustavoa', 'Mariaa', 'Claraa', 'Muriloa', 'Isabellay', 'Felipea', 'Laviniaaa', 'Pietrao', 'Mariaa'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergente.com.br'))\r",
+											" \r",
+											" \r",
+											"function gerarSenha() {\r",
+											"  const caracteres = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"  const comprimentoMinimo = 8;\r",
+											"  const comprimentoMaximo = 12;\r",
+											"  \r",
+											"  let senhaArray = [];\r",
+											"\r",
+											"  senhaArray.push(caracteres[Math.floor(Math.random() * 26)]); // Caractere maiúsculo\r",
+											"  senhaArray.push(caracteres[26 + Math.floor(Math.random() * 26)]); // Caractere minúsculo\r",
+											"  senhaArray.push(caracteres[52 + Math.floor(Math.random() * 10)]); // Número\r",
+											"  senhaArray.push(caracteres[62 + Math.floor(Math.random() * 4)]); // Caractere especial\r",
+											"\r",
+											"  const comprimentoRestante = Math.max(comprimentoMinimo - senhaArray.length, comprimentoMaximo - senhaArray.length);\r",
+											"\r",
+											"  for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"    senhaArray.push(caracteres[Math.floor(Math.random() * caracteres.length)]);\r",
+											"  }\r",
+											"\r",
+											"  return shuffleString(senhaArray.join(\"\"));\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"  return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Password\", gerarSenha());\r",
+											" \r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{Password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login - new user 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify token is true\", function () {\r",
+											"    pm.expect(JSON.parse(responseBody)).to.have.property(\"token\");\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"TokenUser\", JSON.parse(responseBody).token)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Full name field without filling",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify the message\", function () {\r",
+											"    pm.expect(pm.globals.get(\"MsgRequiredField\")).to.eql(JSON.parse(responseBody).error[0])\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The full name field filled with 101 characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify the message\", function () {\r",
+											"    pm.expect(pm.globals.get(\"MsgMaximumCharacters\")).to.eql(JSON.parse(responseBody).error[0])\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const nomes = [\"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaj, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaao, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaap,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaq, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaat, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaau, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaav, Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaw,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaax Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay,Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"FullName101\", pm.variables.replaceIn(nomeRandom))\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\":\"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Full name field filled with special characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"FullNameEspecialCaractere\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullNameEspecialCaractere}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Full name field filled with numbers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const nomes = [\"12523\", \"45546\", \"78689\", \"123456\", \"234567\", \"345678\", \"456789\", \"01234\", \"04321\", \"54321\", \"654114\", \"254263257\", \"025489\", \"365478\", \"2541365\", \"985471\", \"3254123\", \"8745985\", \"3254125\", \"032145698\", \"2541586\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"FullNameNumero\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullNameNumero}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Full Name field filled in Simple Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											" \r",
+											"pm.environment.set(\"SimpleName\", pm.variables.replaceIn(nameRandom))\r",
+											"\r",
+											"\r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + '@convergentess.com.br'))\r",
+											" \r",
+											" \r",
+											"function gerarSenha() {\r",
+											"  const caracteres = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"  const comprimentoMinimo = 8;\r",
+											"  const comprimentoMaximo = 12;\r",
+											"  \r",
+											"  let senhaArray = [];\r",
+											"\r",
+											"  senhaArray.push(caracteres[Math.floor(Math.random() * 26)]); // Caractere maiúsculo\r",
+											"  senhaArray.push(caracteres[26 + Math.floor(Math.random() * 26)]); // Caractere minúsculo\r",
+											"  senhaArray.push(caracteres[52 + Math.floor(Math.random() * 10)]); // Número\r",
+											"  senhaArray.push(caracteres[62 + Math.floor(Math.random() * 4)]); // Caractere especial\r",
+											"\r",
+											"  const comprimentoRestante = Math.max(comprimentoMinimo - senhaArray.length, comprimentoMaximo - senhaArray.length);\r",
+											"\r",
+											"  for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"    senhaArray.push(caracteres[Math.floor(Math.random() * caracteres.length)]);\r",
+											"  }\r",
+											"\r",
+											"  return shuffleString(senhaArray.join(\"\"));\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"  return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Password\", gerarSenha());\r",
+											" \r",
+											" \r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{SimpleName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Error Message Validation: Enter First and Last Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"Alice\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The unformatted e-mail field @",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"isadoracunhaconvergentes.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The email field populated without the format .COM.BR",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"isadoracunha@convergentes\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The email field filled with space in the name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"isadora cunha@convergentes.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The email field filled with space in the domain",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"isadoracunha@conver gentes.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "E-mail field not filled in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field without filling in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in with 7 characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Te\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Te\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in with 17 characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Testeeeeeeee\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Testeeeeeeee\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in without a capital letter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergentes.com.br'))\r",
+											" \r",
+											"function gerarSenha() {\r",
+											"  const caracteres = \"abcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"  const comprimentoMinimo = 8;\r",
+											"  const comprimentoMaximo = 12;\r",
+											"  \r",
+											"  let senhaArray = [];\r",
+											"\r",
+											"  senhaArray.push(caracteres[26 + Math.floor(Math.random() * 26)]); // Caractere minúsculo\r",
+											"  senhaArray.push(caracteres[52 + Math.floor(Math.random() * 10)]); // Número\r",
+											"  senhaArray.push(caracteres[62 + Math.floor(Math.random() * 4)]); // Caractere especial\r",
+											"\r",
+											"  const comprimentoRestante = Math.max(comprimentoMinimo - senhaArray.length, comprimentoMaximo - senhaArray.length);\r",
+											"\r",
+											"  for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"    senhaArray.push(caracteres[Math.floor(Math.random() * caracteres.length)]);\r",
+											"  }\r",
+											"\r",
+											"  return shuffleString(senhaArray.join(\"\"));\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"  return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"PasswordSemMaiuscula\", gerarSenha());\r",
+											"\r",
+											"\r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{PasswordSemMaiuscula}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"{{PasswordSemMaiuscula}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in without a lowercase letter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const names = ['Alice', 'Miguel', 'Sophia', 'Arthur', 'Helena', 'Bernardo', 'Valentina', 'Heitor', 'Laura', 'Davi', 'Isabella', 'Lorenzo', 'Manuela', 'Theo', 'Luiza', 'Pedro', 'Giovanna', 'Gabriel', 'Julia', 'Enzo', 'Maria', 'Luiza', 'Matheus', 'Lorena', 'Lucas', 'Beatriz', 'Benjamin', 'Maria', 'Eduarda', 'Nicolas', 'Lara', 'Guilherme', 'Mariana', 'Rafael', 'Larissa', 'Joaquim', 'Camila', 'Samuel', 'Isadora', 'Henrique', 'Antonia', 'Gustavo', 'Maria', 'Clara', 'Murilo', 'Isabelly', 'Felipe', 'Lavinia', 'Pietro', 'Maria'];\r",
+											" \r",
+											"const lastnames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Almeida', 'Lima', 'Ferreira', 'Pereira', 'Carvalho', 'Ribeiro', 'Costa', 'Araujo', 'Martins', 'Fernandes', 'Rocha', 'Melo', 'Barbosa', 'Cardoso', 'Nascimento', 'Gomes', 'Lopes', 'Marques', 'Ramos', 'Cunha', 'Brito', 'Dias', 'Campos', 'Castro', 'Monteiro', 'Mendes', 'Sousa', 'Monteiro', 'Braga', 'Moura', 'Barros', 'Pinto', 'Correia', 'Teixeira', 'Machado', 'Andrade', 'Vieira', 'Saraiva', 'Lobo', 'Freitas', 'Leal', 'Reis', 'Carneiro'];\r",
+											" \r",
+											"const nameRandom = names[Math.floor(Math.random() * names.length)];\r",
+											"const lastNameRandom = lastnames[Math.floor(Math.random() * lastnames.length)];\r",
+											" \r",
+											"pm.environment.set(\"FirstName\", pm.variables.replaceIn(nameRandom))\r",
+											" \r",
+											"pm.environment.set(\"LastName\", pm.variables.replaceIn(lastNameRandom))\r",
+											" \r",
+											"pm.environment.set(\"FullName\", \r",
+											"    pm.variables.replaceIn(nameRandom + ' ' + lastNameRandom))\r",
+											" \r",
+											" \r",
+											"pm.environment.set(\"Email\",  \r",
+											"    pm.variables.replaceIn(nameRandom.toLowerCase() + lastNameRandom.toLowerCase() + '@convergentes.com.br'))\r",
+											" \r",
+											"function gerarSenha() {\r",
+											"  const caracteres = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%\";\r",
+											"  const comprimentoMinimo = 8;\r",
+											"  const comprimentoMaximo = 12;\r",
+											"  \r",
+											"  let senhaArray = [];\r",
+											"\r",
+											"  senhaArray.push(caracteres[Math.floor(Math.random() * 26)]); // Caractere maiúsculo\r",
+											"  senhaArray.push(caracteres[52 + Math.floor(Math.random() * 10)]); // Número\r",
+											"  senhaArray.push(caracteres[62 + Math.floor(Math.random() * 4)]); // Caractere especial\r",
+											"\r",
+											"  const comprimentoRestante = Math.max(comprimentoMinimo - senhaArray.length, comprimentoMaximo - senhaArray.length);\r",
+											"\r",
+											"  for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"    senhaArray.push(caracteres[Math.floor(Math.random() * caracteres.length)]);\r",
+											"  }\r",
+											"\r",
+											"  return shuffleString(senhaArray.join(\"\"));\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"  return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"PasswordSemMinuscula\", gerarSenha());\r",
+											"\r",
+											"\r",
+											"function cpf() {\r",
+											"    const randomDigit = () => Math.floor(Math.random() * 10)\r",
+											"    const cpfDigits = Array.from({length: 9 }, randomDigit)\r",
+											" \r",
+											"    let sum = 0\r",
+											"    for (let i = 10; i > 1; i--) {\r",
+											"        sum+= cpfDigits[10 - i ] * i\r",
+											"    }\r",
+											" \r",
+											"    const firstVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(firstVerifierDigits === 10 ? 0 : firstVerifierDigits)\r",
+											" \r",
+											"    sum = 0\r",
+											"    for (let i = 11; i > 1; i--) {\r",
+											"        sum += cpfDigits[11 - i] * i\r",
+											"    }\r",
+											" \r",
+											"    const secondVerifierDigits = (sum * 10) % 11\r",
+											"    cpfDigits.push(secondVerifierDigits === 10 ? 0 : secondVerifierDigits)\r",
+											" \r",
+											"    return cpfDigits.join('')\r",
+											"}\r",
+											"pm.environment.set(\"CPFUser\", cpf())"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{PasswordSemMinuscula}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"{{PasswordSemMinuscula}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in without a special character",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The password field filled in without a number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"test@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"test@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Error Message Validation: Password Must Contain: An uppercase letter, lowercase letter, number, and a special character(@#$%)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The Password field populated with divergent passwords",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Testt\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The Confirm Password field populated with divergent passwords",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Teste\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "The Confirm Password field without filling in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Error Message Validation: Passwords Do Not Match",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": {{CPFUser}},\r\n  \"confirmPassword\": \"1234@Testee\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "E-mail field not filled in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incorrect email field",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"samantha@gmail.com\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Password field not filled in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incorrect password field",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"1234@Error\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Field e-mail and password of a user without registration",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{TokenUser}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"samantha@gmail.com\",\r\n  \"password\": \"1234@Error\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete - user id Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user/{{IdUser}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{IdUser}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{Token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "query",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
