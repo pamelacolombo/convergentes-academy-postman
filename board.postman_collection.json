@@ -1,0 +1,1162 @@
+{
+	"info": {
+		"_postman_id": "678c1b5a-f1b0-410a-9dc3-e71913bf84bd",
+		"name": "Board",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27633104"
+	},
+	"item": [
+		{
+			"name": "Directors",
+			"item": [
+				{
+					"name": "Config",
+					"item": [
+						{
+							"name": "Login - Default",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"Token\", JSON.parse(responseBody).token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Director Registration",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Exxecutivooos\", \"Fiinanceirooos\", \"Opperacoessss\", \"Maarketingggs\", \"Rrecursosss Huumanosss\", \"Pllanejamentso Estrategicooo\", \"Reelacsoes Publicasss\", \"Suutentabsilidadeee\", \"Reesponsabilidade Sociaslll\", \"Vesendasss\", \"Coonformidadese\", \"Iinosvacaooo\", \"Teecnolosgiaaa\", \"Eeticsaaa, Exxecutivosooa\", \"Fiinanceisroooa\", \"Oppesracoesssa\", \"Maarketinggsga\", \"Rrecsursos Huumanossssa\", \"Pllanejamento Estratesgicoooa\", \"Reelacsoes Publicasssa\", \"Suutsentabilidadeeea\", \"Reesponsabilidadea Socisalll\", \"Vseendasssa\", \"Coonformidaddeea\", \"Iinovacaoooda\", \"Teecnologiaadaa\", \"Eetdicaaaa\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardName\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"IdBoard\", JSON.parse(responseBody).newBoard._id);\r",
+											"\r",
+											"pm.test(\"Check is boardName is true\", function () {\r",
+											"  pm.expect(pm.environment.get(\"BoardName\")).to.eql(JSON.parse(responseBody).newBoard.boardName);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"MsgSuccessfulRegistrationBoard\", 'Cadastro realizado com sucesso.')\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardName}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Include Board of Directors",
+					"item": [
+						{
+							"name": "Board of Directors Not Filled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Capitalized Letters Only Board",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"EXECUTIVOA\", \"FINANCEIROA\", \"OPERACIONALA\", \"MARKETINGA\", \"RECURSOS HUMANOSA\", \"PLANEJAMENTO ESTRATEGICOA\", \"RELACOES PUBLICASA\", \"SUSTENTABILIDADEA\", \"RESPONSABILIDADE SOCIALA\", \"VENDASA\", \"CONFORMIDADEA\", \"INOVACAOA\", \"TECNOLOGIAA\", \"ETICAA\", \"CONTABILIDADEA\", \"ADMINISTRATIVOA\", \"COMERCIALA\", \"PRODUCAOA\", \"TECNICOA\", \"COBRANCAA\", \"COMPRASA EXECUTIVOB\", \"FINANCEIROB\", \"OPERACIONALB\", \"MARKETINGB\", \"RECURSOS HUMANOSB\", \"PLANEJAMENTO ESTRATEGICOB\", \"RELACOES PUBLICASB\", \"SUSTENTABILIDADEB\", \"RESPONSABILIDADE SOCIALB\", \"VENDASB\", \"CONFORMIDADEB\", \"INOVACAOB\", \"TECNOLOGIAB\", \"ETICAB\", \"CONTABILIDADEB\", \"ADMINISTRATIVOB\", \"COMERCIALB\", \"PRODUCAOB\", \"TECNICOB\", \"COBRANCAB\", \"COMPRASB\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BOARDNAMEMAIUSCULA\", pm.variables.replaceIn(nomeRandom))\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BOARDNAMEMAIUSCULA}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lowercase only directory",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"executivoa\", \"financeiroa\", \"operacionala\", \"marketinga\", \"recursos humanosa\", \"planejamento estrategicoa\", \"relacoes publicasa\", \"sutentabilidadea\", \"responsabilidade sociala\", \"vendasa\", \"conformidadea\", \"inovacaoa\", \"tecnologiaa\", \"eticaa\", \"contabilidadea\", \"administrativoa\", \"comerciala\", \"producaoa\", \"tecnicoa\", \"cobrancaa\", \"compraas\", \"executivob\", \"financeirob\", \"operacionabl\", \"marketingb\", \"recursos humanosbb\", \"planejamento estrategicob\", \"relacoes publicasb\", \"sutentabilidadeb\", \"responsabilidade socialb\", \"vendabs\", \"conformidadeb\", \"inovacaob\", \"tecnologiab\", \"eticab\", \"contabilidadbe\", \"administrativob\", \"comercialb\", \"producaob\", \"tecnicob\", \"cobrancab\", \"comprasb\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"boardnameminuscula\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{boardnameminuscula}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Board of Directors with Special Character &",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"& && & \", \"&&& & &\", \"&&& & &&\", \"&& &&&& &\", \"&&&&& & &&\", \"&&&& &&&& &&\", \"&&&& &&&&& &\", \"&&&&&&&& &\", \"&&&& &&&&& &\", \"&&&&& &&&& &&& &\", \"&&&&& && &&&&&& &\", \"&&&&&& &&&&&& &\", \"&&&&&& &&&&&& &&& &\", \"& && &\", \"& &&& && &\", \"&&& & && &\", \"&&& & &\", \"&& & && &\", \"&&& && && &\", \"& & &&& &\", \"&& && &&& &\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardNameCaracter&\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardNameCaracter&}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Board of Directors with Numbers",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"12523\", \"45546\", \"78689\", \"123456\", \"234567\", \"345678\", \"456789\", \"01234\", \"04321\", \"54321\", \"654114\", \"254263257\", \"025489\", \"365478\", \"2541365\", \"985471\", \"3254123\", \"8745985\", \"3254125\", \"032145698\", \"2541586\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardNameNumero\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardNameNumero}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "board of directors with special character other than &",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"BoardNameCaracterDiferente\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardNameCaracterDiferente}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Board of Directors Filled with 50 characters",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Cfccccccccccccccccccccccccccccccccccccccccccccccca\", \"Ccfccccccccccccccccccccccccccccccccccccccccccccccb\", \"Ccfccccccccccccccccccccccccccccccccccccccccccccccd\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccce\", \"Ccccccccfccccccccccccccccccccccccccccccccccccccccf\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccg\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccch\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccci\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccj\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccck\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccccl\", \"Ccccccccccccfccccccccccccccccccccccccccccccccccccm\", \"Ccccccccccccfccccccccccccccccccccccccccccccccccccn\", \"Ccccccccccfcccccccccccccccccccccccccccccccccccccco\", \"Cccccccccfcccccccccccccccccccccccccccccccccccccccp\", \"Ccccccccfccccccccccccccccccccccccccccccccccccccccq\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccr\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccs\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccct\", \"Ccccccfccccccccccccccccccccccccccccccccccccccccccu\", \"Ccccccfccccccccccccccccccccccccccccccccccccccccccv\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardName50\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardName50}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Board of Directors Filled with 51 characters",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Cccccccccccccccccccccccccccccccccccccccccccccccccac\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccbc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccdc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccec\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccfc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccgc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccchc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccic\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccjc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccckc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccclc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccmc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccnc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccoc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccpc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccqc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccrc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccsc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccctc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccuc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccvc\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardName51\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardName51}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Board of Directors with name already registered",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" pm.test(\"Status code is 409\", function () {\r",
+											"    pm.response.to.have.status(409);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"Operações\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"The field (nome_campo) is required.\"",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Verify message error', () => {\r",
+											"    const MsgRequiredBoard = JSON.parse(responseBody).error[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgRequiredBoard\", MsgRequiredBoard)\r",
+											"  \r",
+											"   pm.expect((MsgRequiredBoard)).to.eql(JSON.parse(responseBody).error[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.error).to.eql([\"O campo 'diretoria' é obrigatório.\"]);\r",
+											"});\r",
+											"\r",
+											" "
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validate the message \"The field (nome_campo) can only contain (descrição_caracteres).\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"BoardCaracterDiferente\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Verify message error', () => {\r",
+											"    const MsgCriteriaPasswordBoard = JSON.parse(responseBody).error[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgCriteriaPasswordBoard\", MsgCriteriaPasswordBoard)\r",
+											"  \r",
+											"   pm.expect((MsgCriteriaPasswordBoard)).to.eql(JSON.parse(responseBody).error[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.error).to.eql([\"O campo 'diretoria' só pode conter letras e o caractere especial '&'.\"]);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardCaracterDiferente}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"Unable to save this record. Board of Directors already registered in the system.\"",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" \r",
+											"pm.test(\"Status code is 409\", function () {\r",
+											"    pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"pm.test('Verify message alert', () => {\r",
+											"    const MsgAlreadyRegisteredBoard = JSON.parse(responseBody).alert[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgAlreadyRegisteredBoard\", MsgAlreadyRegisteredBoard)\r",
+											"  \r",
+											"   pm.expect((MsgAlreadyRegisteredBoard)).to.eql(JSON.parse(responseBody).alert[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.alert).to.eql([\"Não é possível salvar esse registro. Diretoria já cadastrada no sistema.\"]);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"Operações\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"Registration successful.\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Exxecutivooo\", \"Fiinanceirooo\", \"Opperacoesss\", \"Maarketinggg\", \"Rrecursos Huumanosss\", \"Pllanejamento Estrategicooo\", \"Reelacoes Publicasss\", \"Suutentabilidadeee\", \"Reesponsabilidade Socialll\", \"Veendasss\", \"Coonformidadee\", \"Iinovacaooo\", \"Teecnologiaaa\", \"Eeticaaa, Exxecutivoooa\", \"Fiinanceiroooa\", \"Opperacoesssa\", \"Maarketinggga\", \"Rrecursos Huumanosssa\", \"Pllanejamento Estrategicoooa\", \"Reelacoes Publicasssa\", \"Suutentabilidadeeea\", \"Reesponsabilidadea Socialll\", \"Veendasssa\", \"Coonformidadeea\", \"Iinovacaoooa\", \"Teecnologiaaaa\", \"Eeticaaaa\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardName\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardName}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit Board of Directors",
+					"item": [
+						{
+							"name": "Update a directorate's data by passing the ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"ExxecutivoooII\", \"FiinanceiroooII\", \"OpperacoesssII\", \"MaarketingggII\", \"Rrecursos HuumanosssII\", \"Pllanejamento EstrategicoooII\", \"Reelacoes PublicasssII\", \"SuutentabilidadeeeII\", \"Reesponsabilidade SocialllII\", \"VeendasssII\", \"CoonformidadeeII\", \"IinovacaoooII\", \"TeecnologiaaaII\", \"Eeticaaa, ExxecutivoooaII\", \"FiinanceiroooaII\", \"OpperacoesssaII\", \"MaarketingggaII\", \"Rrecursos HuumanosssaII\", \"Pllanejamento EstrategicoooaII\", \"Reelacoes PublicasssaII\", \"SuutentabilidadeeeaII\", \"Reesponsabilidadea SocialllII\", \"VeendasssaII\", \"CoonformidadeeaII\", \"IinovacaoooaII\", \"TeecnologiaaaaII\", \"EeticaaaaII\"];\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"BoardNameII\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{BoardNameII}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/board/{{IdBoard}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										"{{IdBoard}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Board of Directors",
+					"item": [
+						{
+							"name": "Show a directory by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/board/{{IdBoard}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										"{{IdBoard}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List Boards",
+					"item": [
+						{
+							"name": "Board Listing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/board/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									],
+									"query": [
+										{
+											"key": "boardName",
+											"value": "Operações",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Directory listing and provides query search using boardName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/board/?boardName=Operações",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									],
+									"query": [
+										{
+											"key": "boardName",
+											"value": "Operações"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Board Count",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/board/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"board",
+										"count"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{Token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "query",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

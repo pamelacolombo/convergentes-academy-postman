@@ -7,7 +7,7 @@
    ``` npm install -g newman-reporter-htmlextra ```
 
 # Execução com report html extra
-    newman run convergentes.json -e env-automacao.json -g env-globals.json 
+    newman run convergentes.postman_collection.json -g workspace.postman_globals.json -e convergentes.postman_environment.json  
 
 ## Time:
 - Jéssica Viana 
