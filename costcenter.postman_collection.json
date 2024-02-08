@@ -1,0 +1,1384 @@
+{
+	"info": {
+		"_postman_id": "5309dbcc-9cd5-4366-bc8d-3bd982146022",
+		"name": "Cost Center",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27633104"
+	},
+	"item": [
+		{
+			"name": "Cost Center",
+			"item": [
+				{
+					"name": "Config",
+					"item": [
+						{
+							"name": "Login - Default",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"Token\", JSON.parse(responseBody).token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/login/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Cost Center Record",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"ExxecutivooosI\", \"FiinanceirooosI\", \"OppersacoesssI\", \"MaarketsingggI\", \"Rrecurssos HuumanosssI\", \"Plslanejamento EstrsategicoooI\", \"Reelascoes PublicasssI\", \"SuutssentabilidadeeeI\", \"Reesponsabilisdade SocialllI\", \"VeensdasssI\", \"CoonfosrmidadeeI\", \"IinovsacaoooI\", \"TeecsnologiaaaI\", \"EetiscaaaI, ExxescutivoooaI\", \"FiisnanceiroooaI\", \"OppesracoesssaI\", \"MaarkestingggaI\", \"Rrsecursos HuumasnosssaI\", \"Pllanejamento EstrategicoooaI\", \"Reelascoes PublicasssaI\", \"SuutentabsilidadeeeaI\", \"Reessponsabilidadea SocialllI\", \"VeensdasssaI\", \"CoosnformidadeeaI\", \"IinovacsaoooaI\", \"TeecnologiaaaaI\", \"EetsicsaaaaI\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterName\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"IdCostCenter\", JSON.parse(responseBody).newCostCenter._id);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the message\", () => {\r",
+											"   pm.environment.set(\"MsgSuccessfulRegistrationBoard\", 'Cadastro realizado com sucesso.')\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterName}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Include Cost Center",
+					"item": [
+						{
+							"name": "Cost Center Not Filled",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Capitalized Letters Only Cost Center",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"EXECUTIVOA\", \"FINANCEIROA\", \"OPERACIONALA\", \"MARKETINGA\", \"RECURSOS HUMANOSA\", \"PLANEJAMENTO ESTRATEGICOA\", \"RELACOES PUBLICASA\", \"SUSTENTABILIDADEA\", \"RESPONSABILIDADE SOCIALA\", \"VENDASA\", \"CONFORMIDADEA\", \"INOVACAOA\", \"TECNOLOGIAA\", \"ETICAA\", \"CONTABILIDADEA\", \"ADMINISTRATIVOA\", \"COMERCIALA\", \"PRODUCAOA\", \"TECNICOA\", \"COBRANCAA\", \"COMPRASA EXECUTIVOB\", \"FINANCEIROB\", \"OPERACIONALB\", \"MARKETINGB\", \"RECURSOS HUMANOSB\", \"PLANEJAMENTO ESTRATEGICOB\", \"RELACOES PUBLICASB\", \"SUSTENTABILIDADEB\", \"RESPONSABILIDADE SOCIALB\", \"VENDASB\", \"CONFORMIDADEB\", \"INOVACAOB\", \"TECNOLOGIAB\", \"ETICAB\", \"CONTABILIDADEB\", \"ADMINISTRATIVOB\", \"COMERCIALB\", \"PRODUCAOB\", \"TECNICOB\", \"COBRANCAB\", \"COMPRASB\"];\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"COSTCENTERNAMEMAIUSCULA\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{COSTCENTERNAMEMAIUSCULA}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lowercase only Cost Center",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"executivoa\", \"financeiroa\", \"operacionala\", \"marketinga\", \"recursos humanosa\", \"planejamento estrategicoa\", \"relacoes publicasa\", \"sutentabilidadea\", \"responsabilidade sociala\", \"vendasa\", \"conformidadea\", \"inovacaoa\", \"tecnologiaa\", \"eticaa\", \"contabilidadea\", \"administrativoa\", \"comerciala\", \"producaoa\", \"tecnicoa\", \"cobrancaa\", \"compraas\", \"executivob\", \"financeirob\", \"operacionabl\", \"marketingb\", \"recursos humanosbb\", \"planejamento estrategicob\", \"relacoes publicasb\", \"sutentabilidadeb\", \"responsabilidade socialb\", \"vendabs\", \"conformidadeb\", \"inovacaob\", \"tecnologiab\", \"eticab\", \"contabilidadbe\", \"administrativob\", \"comercialb\", \"producaob\", \"tecnicob\", \"cobrancab\", \"comprasb\"];\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"costcenternameminuscula\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{costcenternameminuscula}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cost Center with Special Character &",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"& &\", \"&& &\", \"&&& &\", \"&&&& &\", \"&&&&& &\", \"&&&&&& &&\", \"&&&&&&& &\", \"&&&&&&&& &\", \"&&&& &&&&& &\", \"&&&&& &&&&& &\", \"&&&&& &&&&&& &\", \"&&&&&& &&&&&& &\", \"&&&&&& &&&&&&& &\", \"& && &\", \"& &&& &\", \"&& && &\", \"&&& & &\", \"&& & &\", \"&&& && &\", \"&&& &&& &\", \"&& &&& &\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterNameCaracter&\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterNameCaracter&}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cost Center with Numbers",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"12523\", \"45546\", \"78689\", \"123456\", \"234567\", \"345678\", \"456789\", \"01234\", \"04321\", \"54321\", \"654114\", \"254263257\", \"025489\", \"365478\", \"2541365\", \"985471\", \"3254123\", \"8745985\", \"3254125\", \"032145698\", \"2541586\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterNameNumero\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterNameNumero}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cost Center with special character other than &",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"CostCenterNameCaracterDiferente\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterNameCaracterDiferente}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cost Center Filled with 50 characters",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Cfccccccccccccccccccccccccccccccccccccccccccccccca\", \"Ccfccccccccccccccccccccccccccccccccccccccccccccccb\", \"Ccfccccccccccccccccccccccccccccccccccccccccccccccd\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccce\", \"Ccccccccfccccccccccccccccccccccccccccccccccccccccf\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccg\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccch\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccci\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccj\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccck\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccccl\", \"Ccccccccccccfccccccccccccccccccccccccccccccccccccm\", \"Ccccccccccccfccccccccccccccccccccccccccccccccccccn\", \"Ccccccccccfcccccccccccccccccccccccccccccccccccccco\", \"Cccccccccfcccccccccccccccccccccccccccccccccccccccp\", \"Ccccccccfccccccccccccccccccccccccccccccccccccccccq\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccr\", \"Cccccccfcccccccccccccccccccccccccccccccccccccccccs\", \"Cccccccfccccccccccccccccccccccccccccccccccccccccct\", \"Ccccccfccccccccccccccccccccccccccccccccccccccccccu\", \"Ccccccfccccccccccccccccccccccccccccccccccccccccccv\"];\r",
+											"\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterName50\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterName50}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cost Center Filled with 51 characters",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"Cccccccccccccccccccccccccccccccccccccccccccccccccac\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccbc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccdc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccec\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccfc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccgc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccchc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccic\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccjc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccckc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccclc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccmc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccnc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccoc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccpc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccqc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccrc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccsc\", \"Ccccccccccccccccccccccccccccccccccccccccccccccccctc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccuc\", \"Cccccccccccccccccccccccccccccccccccccccccccccccccvc\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterName51\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterName51}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"The field (nome_campo) is required.\".",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test('Verify message error', () => {\r",
+											"    const MsgRequiredCostCenter = JSON.parse(responseBody).error[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgRequiredCostCenter\", MsgRequiredCostCenter)\r",
+											"  \r",
+											"   pm.expect((MsgRequiredCostCenter)).to.eql(JSON.parse(responseBody).error[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.error).to.eql([\"O campo 'centro de custos' é obrigatório.\"]);\r",
+											"});\r",
+											"\r",
+											" "
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"The Cost Center field can only contain (descrição_caracteres).\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const caracteresEspeciais = \"!@#$%^*()_+{}:<>?~`-=[];',./\";\r",
+											"let massaDeDados = \"\";\r",
+											"for (let i = 0; i < 10; i++) {\r",
+											"    massaDeDados += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"CostCenterNameCaracterDiferente\", massaDeDados);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Verify message error', () => {\r",
+											"    const MsgCriteriaPasswordCostCenter = JSON.parse(responseBody).error[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgCriteriaPasswordCostCenter\", MsgCriteriaPasswordCostCenter)\r",
+											"  \r",
+											"   pm.expect((MsgCriteriaPasswordCostCenter)).to.eql(JSON.parse(responseBody).error[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.error).to.eql([\"O campo 'centro de custos' só pode conter letras e o caractere especial '&'.\"]);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterNameCaracterDiferente}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"Unable to save this record. Cost Center already registered in the system.\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 409\", function () {\r",
+											"    pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test('Verify message alert', () => {\r",
+											"    const MsgAlreadyRegisteredCostCenter = JSON.parse(responseBody).alert[0]\r",
+											"\r",
+											"    pm.globals.set(\"MsgAlreadyRegisteredCostCenter\", MsgAlreadyRegisteredCostCenter)\r",
+											"  \r",
+											"   pm.expect((MsgAlreadyRegisteredCostCenter)).to.eql(JSON.parse(responseBody).alert[0])\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Field value is correct\", function () {\r",
+											"  var jsonData = pm.response.json();\r",
+											"  pm.expect(jsonData.alert).to.eql([\"Não é possível salvar esse registro. Centro de custos já cadastrado no sistema.\"]);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"Financeiro\",\r\n  \"boardId\": \"658048659e210910c5069e24\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation of the message \"Registration successful.\"",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"ExxecutivooosI\", \"FiinanceirooosI\", \"OppersacoesssI\", \"MaarketsingggI\", \"Rrecurssos HuumanosssI\", \"Plslanejamento EstrsategicoooI\", \"Reelascoes PublicasssI\", \"SuutssentabilidadeeeI\", \"Reesponsabilisdade SocialllI\", \"VeensdasssI\", \"CoonfosrmidadeeI\", \"IinovsacaoooI\", \"TeecsnologiaaaI\", \"EetiscaaaI, ExxescutivoooaI\", \"FiisnanceiroooaI\", \"OppesracoesssaI\", \"MaarkestingggaI\", \"Rrsecursos HuumasnosssaI\", \"Pllanejamento EstrategicoooaI\", \"Reelascoes PublicasssaI\", \"SuutentabsilidadeeeaI\", \"Reessponsabilidadea SocialllI\", \"VeensdasssaI\", \"CoosnformidadeeaI\", \"IinovacsaoooaI\", \"TeecnologiaaaaI\", \"EetsicsaaaaI\"];\r",
+											"\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterName\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the msg\", function () {\r",
+											"   const mensagem = 'Cadastro realizado com sucesso.'\r",
+											"   pm.expect(JSON.parse(responseBody).msg).to.equal(mensagem);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterName}}\",\r\n  \"boardId\": \"{{IdBoard}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit Cost Center",
+					"item": [
+						{
+							"name": "atualizar um centro de custo passando o id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const nomes = [\"ExecutivoII\", \"FinanceiroII\", \"OperacionalII\", \"MarketingII\", \"Recursos HumanosII\", \"Planejamento EstrategicoII\", \"Relacoes PublicasII\", \"SutentabilidadeII\", \"Responsabilidade SocialII\", \"VendasII\", \"ConformidadeII\", \"InovacaoII\", \"TecnologiaaII\", \"EticaII\", \"ContabilidadeII\", \"AdministrativoII\", \"ComercialII\", \"ProducaoII\", \"TecnicoII\", \"CobrancaII\", \"ComprasII\"];\r",
+											"\r",
+											"\r",
+											"const nomeRandom = nomes[Math.floor(Math.random() * nomes.length)];\r",
+											"\r",
+											"pm.environment.set(\"CostCenterNameII\", pm.variables.replaceIn(nomeRandom))"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"costCenterName\": \"{{CostCenterNameII}}\",\r\n  \"boardId\": \"658048659e210910c5069e24\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/{{IdCostCenter}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										"{{IdCostCenter}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Cost Center",
+					"item": [
+						{
+							"name": "mostrar um centro de custo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/costCenter/{{IdCostCenter}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										"{{IdCostCenter}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List Cost Center",
+					"item": [
+						{
+							"name": "listagem de centro de custos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/costCenter/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "contagem de centro de custos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/costCenter/count/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										"count",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Inactivate Cost Center",
+					"item": [
+						{
+							"name": "atualizar o status de um centro de custo passando o id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/costCenter/status/{{IdCostCenter}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										"status",
+										"{{IdCostCenter}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
